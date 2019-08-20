@@ -19,7 +19,7 @@ class CreateProductsTable extends Migration
             $table->string('slug');
             $table->text('description')->nullable();
             $table->decimal('price')->nullable();
-            $table->integer('stock')->default(0);
+            $table->integer('stock')->unsigned()->default(0);
             $table->boolean('active')->default(1);
             $table->timestamps();
         });

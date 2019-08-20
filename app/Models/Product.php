@@ -17,7 +17,6 @@ class Product extends Model
         'active'
     ];
 
-
     public function sluggable(): array
     {
         return [
@@ -25,6 +24,11 @@ class Product extends Model
                 'source' => 'name'
             ]
             ];
+    }
+
+    public function categories()
+    {
+        return $this->belongsToMany(Category::class);
     }
 
 }

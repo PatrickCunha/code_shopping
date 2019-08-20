@@ -6,6 +6,7 @@ use CodeShopping\Models\Product;
 use Illuminate\Http\Request;
 use CodeShopping\Http\Controllers\Controller;
 use CodeShopping\Http\Requests\ProductStoreUpdateFormRequest;
+use CodeShopping\Http\Resources\ProductResource;
 
 class ProductController extends Controller
 {
@@ -13,39 +14,39 @@ class ProductController extends Controller
 
     public function index()
     {
-        return Product::all();
+        $products = Product::paginate(30);
+        return ProductResource::collection($products);
     }
  
     public function store(ProductStoreUpdateFormRequest $request)
     {
-        $Product = Product::create($request->all());
-        $Product->refresh();
-        return $Product;
-        //return response($Product, $status = 201, []);
-
+        $product = Product::create($request->all());
+        $product->refresh();
+        return new ProductResource($product);
+        //return response($product, $status = 201, []);
     }
 
     public function show($id)
     {       
-        $Product =  Product::where('id', 1)->orWhere('slug',$id)->get();
-        return $Product->first();
+        $product =  Product::where('id', $id)->orWhere('slug',$id)->get();
+        return new ProductResource($product->first());
     }
 
    
-    public function update(ProductStoreUpdateFormRequest $request, Product $Product)
+    public function update(ProductStoreUpdateFormRequest $request, Product $product)
     {
-        $Product->fill($request->all());
-        $Product->save();
+        $product->fill($request->all());
+        $product->save();
         
 
-        return $Product;
-      //  return response($Product, $status = 204, []);
+        return new ProductResource($product);
+      //  return response($product, $status = 204, []);
        
     }
 
-    public function destroy(Product $Product)
+    public function destroy(Product $product)
     {
-        $Product->delete();
-        return response([], $status = 204, []);
+        $product->delete();
+        return response()->json([], $status = 204, []);
     }
 }
