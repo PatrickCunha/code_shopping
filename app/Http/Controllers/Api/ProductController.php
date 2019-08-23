@@ -32,16 +32,13 @@ class ProductController extends Controller
         return new ProductResource($product->first());
     }
 
-   
     public function update(ProductStoreUpdateFormRequest $request, Product $product)
     {
         $product->fill($request->all());
         $product->save();
         
-
         return new ProductResource($product);
       //  return response($product, $status = 204, []);
-       
     }
 
     public function destroy(Product $product)
