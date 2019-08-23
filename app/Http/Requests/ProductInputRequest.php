@@ -3,9 +3,8 @@
 namespace CodeShopping\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
-use Request;
 
-class ProductStoreUpdateFormRequest extends FormRequest
+class ProductInputRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -25,11 +24,7 @@ class ProductStoreUpdateFormRequest extends FormRequest
     public function rules()
     {
         return [
-            'name' => "required|min:3|max:190",
-            'description' => "required",
-            'price' => "required|numeric",
-            'active' => "boolean",
-
-        ];    
+            'amount' => 'required|int'
+        ];
     }
 }

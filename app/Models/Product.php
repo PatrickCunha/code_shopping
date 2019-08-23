@@ -14,6 +14,7 @@ class Product extends Model
         'slug',
         'description',
         'price',
+        'stock',
         'active'
     ];
 
@@ -29,6 +30,11 @@ class Product extends Model
     public function categories()
     {
         return $this->belongsToMany(Category::class);
+    }
+
+    public function productInputs()
+    {
+        return $this->hasMany(ProductInput::class);
     }
 
 }
