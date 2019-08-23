@@ -23,14 +23,9 @@ class ProductInputController extends Controller
         $productInput = ProductInput::create($request->all() + ['product_id' => $product->id]);
         $product->refresh();
         $newStock = $product->stock + $productInput->amount;
-        
         $product->fill(['stock' => $newStock]);
         $product->save();
         
         return new ProductProductInputResource($product);
-
     }
-
-
-
 }
